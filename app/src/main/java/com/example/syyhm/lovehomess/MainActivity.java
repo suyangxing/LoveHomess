@@ -24,8 +24,8 @@ public class MainActivity extends TabActivity {
     private void addTab(int tabId, String tabName, int drawableId, Class<?> cls) {
         TabSpec tabSpec = tabHost.newTabSpec(tabId + ""); //id是选项卡的标示
         View tabIndicator = LayoutInflater.from(this).inflate(R.layout.tab1, getTabWidget(), false);//底部导航栏
-        ImageView home_image = (ImageView) tabIndicator.findViewById(R.id.home_icon);
-        TextView home_title = (TextView) tabIndicator.findViewById(R.id.home_title);
+        ImageView home_image = (ImageView)tabIndicator.findViewById(R.id.home_icon);
+        TextView home_title = (TextView)tabIndicator.findViewById(R.id.home_title);
         home_title.setText(tabName);    //这是底部导航栏上显示的文字
         if (tabId == 0) {                 //四个选项卡上的文字在xml中默认都设置了灰色，第一个要设置为默认选中的绿色
             home_title.setTextColor(getResources().getColor(R.color.presscolor));//设置为绿色 选中
@@ -59,32 +59,41 @@ public class MainActivity extends TabActivity {
         //// TODO: 2016/8/11 首页页面
         addTab(0, "爱家乡", R.drawable.home_press, Main2Activity.class);
         //// TODO: 2016/8/11 发布页面
-        addTab(0, "发布", R.drawable.publish, Main3Activity.class);
+        addTab(1, "发布", R.drawable.publish, Main3Activity.class);
         //// TODO: 2016/8/11 我的页面
-        addTab(0, "我的", R.drawable.wode, Main4Activity.class);
+        addTab(2, "我的", R.drawable.wode, Main4Activity.class);
         tabHost.getTabWidget().setStripEnabled(false);//设置底部下划线是否出现
-        tabHost.setBackgroundColor(Color.argb(150, 22, 70, 150));
         //设置当前显示哪一个标签
         tabHost.setCurrentTab(0);
+        // 设置所有选项卡的图片为未选中图片 首页为选中图片
+        imageList.get(0).setImageDrawable(getResources().getDrawable(R.drawable.home_press));
+        textList.get(0).setTextColor(getResources().getColor(R.color.presscolor));
+        // 设置所有选项卡的文字是白色。首页为绿色
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                // 设置所有选项卡的图片为未选中图片
-                imageList.get(0).setImageDrawable(getResources().getDrawable(R.drawable.home));
-                imageList.get(1).setImageDrawable(getResources().getDrawable(R.drawable.publish));
-                imageList.get(2).setImageDrawable(getResources().getDrawable(R.drawable.wode));
-                textList.get(1).setTextColor(getResources().getColor(R.color.usualcolor));
-                textList.get(2).setTextColor(getResources().getColor(R.color.usualcolor));
                 switch (Integer.parseInt(tabId)) {
                     case 0:
                         imageList.get(0).setImageDrawable(getResources().getDrawable(R.drawable.home_press));
                         textList.get(0).setTextColor(getResources().getColor(R.color.presscolor));
+                        imageList.get(1).setImageDrawable(getResources().getDrawable(R.drawable.publish));
+                        textList.get(1).setTextColor(getResources().getColor(R.color.usualcolor));
+                        imageList.get(2).setImageDrawable(getResources().getDrawable(R.drawable.wode));
+                        textList.get(2).setTextColor(getResources().getColor(R.color.usualcolor));
                         break;
                     case 1:
+                        imageList.get(0).setImageDrawable(getResources().getDrawable(R.drawable.home));
+                        textList.get(0).setTextColor(getResources().getColor(R.color.usualcolor));
                         imageList.get(1).setImageDrawable(getResources().getDrawable(R.drawable.publish_press));
                         textList.get(1).setTextColor(getResources().getColor(R.color.presscolor));
+                        imageList.get(2).setImageDrawable(getResources().getDrawable(R.drawable.wode));
+                        textList.get(2).setTextColor(getResources().getColor(R.color.usualcolor));
                         break;
                     case 2:
+                        imageList.get(0).setImageDrawable(getResources().getDrawable(R.drawable.home));
+                        textList.get(0).setTextColor(getResources().getColor(R.color.usualcolor));
+                        imageList.get(1).setImageDrawable(getResources().getDrawable(R.drawable.publish));
+                        textList.get(1).setTextColor(getResources().getColor(R.color.usualcolor));
                         imageList.get(2).setImageDrawable(getResources().getDrawable(R.drawable.wode_press));
                         textList.get(2).setTextColor(getResources().getColor(R.color.presscolor));
                         break;
