@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Publish</string>
+    <style name="pop_style" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/pop_show_anim</item>
+        <item name="android:windowExitAnimation">@anim/pop_exit_anim</item>
+    </style>
 </resources>

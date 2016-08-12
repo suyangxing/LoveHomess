@@ -1,56 +1,71 @@
 package com.example.publish;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import com.alibaba.fastjson.JSON;
+import com.example.publish.adapter.InterfaceItemAdapter;
+import com.example.publish.enetity.PrintCategory;
+import com.example.publish.service.HTTPService;
+
+import org.xutils.common.Callback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PublishActivity extends AppCompatActivity {
 
     GridView gridView;
-
+    List<PrintCategory.ListBean> list;
+    DownPicPopupWindowActivity downView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
-        //应用图片
-        final int[] img = {R.drawable.meishi, R.drawable.yule, R.drawable.fangchan, R.drawable.che, R.drawable.hunqing, R.drawable.zhuangxiu, R.drawable.jiaoyu,
-                R.drawable.gongzuo, R.drawable.baihuo, R.drawable.tiaozhao, R.drawable.shangwu, R.drawable.bianmin, R.drawable.laoxianghui, R.drawable.qita};
-        //应用名
-        final String[] name = {"美食", "娱乐", "房产", "车", "婚庆", "装修", "教育",
-                "工作", "百货", "跳蚤", "商务", "便民", "老乡会", "其他"};
-
         gridView = (GridView) findViewById(R.id.gv_gridV);
+        list = new ArrayList<PrintCategory.ListBean>();
+        getData();
+    }
 
-        gridView.setAdapter(new BaseAdapter() {
+    public void getData() {
+        HTTPService.getHttpService().getData("http://123.206.87.139/LoveHomeTownServer/printCategory", new Callback.CommonCallback<String>() {
             @Override
-            public int getCount() {
-                return img.length;
+            public void onSuccess(String s) {
+                Log.d("PublishActivity", s);
+                PrintCategory category = JSON.parseObject(s, PrintCategory.class);
+                list=category.getList();
+                Log.d("PublishActivity", list.toString());
+                InterfaceItemAdapter itemAdapter = new InterfaceItemAdapter(PublishActivity.this,list);
+                gridView.setAdapter(itemAdapter);
+                Log.d("PublishActivity", "list.size():" + list.size());
+                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        downView= new DownPicPopupWindowActivity(PublishActivity.this,position);
+                        downView.showAtLocation(PublishActivity.this.findViewById(R.id.main), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0); //
+                    }
+                });
             }
-
             @Override
-            public Object getItem(int position) {
-                return position;
+            public void onError(Throwable throwable, boolean b) {
             }
-
             @Override
-            public long getItemId(int position) {
-                return position;
+            public void onCancelled(CancelledException e) {
             }
-
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                convertView = LayoutInflater.from(PublishActivity.this).inflate(R.layout.interface_item, parent, false);
-                ImageView pImg = (ImageView) convertView.findViewById(R.id.iv_pImg);
-                TextView pName = (TextView) convertView.findViewById(R.id.tv_pName);
-                pImg.setImageResource(img[position]);
-                pName.setText(name[position]);
-                return convertView;
+            public void onFinished() {
             }
         });
     }

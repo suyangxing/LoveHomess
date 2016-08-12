@@ -5,9 +5,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.publish.PublishActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#33cc33"
+        android:gravity="center"
+        android:text="选择发布类型"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
     <GridView
+        android:layout_weight="1"
         android:id="@+id/gv_gridV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="4" />
+        android:numColumns="4"
+        android:paddingTop="40dp" />
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        />
 </LinearLayout>
