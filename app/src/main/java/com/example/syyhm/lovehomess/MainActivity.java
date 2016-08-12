@@ -11,6 +11,10 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
+import com.example.home.HomeActivity;
+import com.example.mines.MineActivtity;
+import com.example.publish.PublishActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,18 +61,18 @@ public class MainActivity extends TabActivity {
 //        ts1.setContent(new Intent(this,Activity1.class));		//设置要切换到的Activity
 //        tabhost.addTab(ts1);						//设置好的控制区加到TabHost中
         //// TODO: 2016/8/11 首页页面
-        addTab(0, "爱家乡", R.drawable.home_press, Main2Activity.class);
+        addTab(0, "爱家乡", R.drawable.home_press, HomeActivity.class);
         //// TODO: 2016/8/11 发布页面
-        addTab(1, "发布", R.drawable.publish, Main3Activity.class);
+        addTab(1, "发布", R.drawable.publish, PublishActivity.class);
         //// TODO: 2016/8/11 我的页面
-        addTab(2, "我的", R.drawable.wode, Main4Activity.class);
+       addTab(2, "我的", R.drawable.wode, MineActivtity.class);
         tabHost.getTabWidget().setStripEnabled(false);//设置底部下划线是否出现
         //设置当前显示哪一个标签
         tabHost.setCurrentTab(0);
         // 设置所有选项卡的图片为未选中图片 首页为选中图片
+        // 设置所有选项卡的文字是白色。首页为绿色
         imageList.get(0).setImageDrawable(getResources().getDrawable(R.drawable.home_press));
         textList.get(0).setTextColor(getResources().getColor(R.color.presscolor));
-        // 设置所有选项卡的文字是白色。首页为绿色
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
